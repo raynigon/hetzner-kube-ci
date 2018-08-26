@@ -13,13 +13,15 @@ build-cluster:
     - hetzner-kube context add $CLUSTER_NAME | $HETZNER_API_TOKEN
     - hetzner-kube ssh-key add --name $CLUSTER_NAME
     - hetzner-kube cluster create --name $CLUSTER_NAME --ssh-key $SSH_KEY_NAME
-    - hetzner-kube cluster kubeconfig --name $CLUSTER_NAME
+    - hetzner-kube cluster kubeconfig --name $CLUSTER_NAME -p > kubeconfig.yaml
   artifacts:
     paths:
     - kubeconfig.yml
 
 install-openebs:
   image: lachlanevenson/k8s-kubectl:latest
+  before_script:
+    - mv kubeconfig.yml ~/.kube/config
   script:
     - kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-operator.yaml
     - kubectl apply -f https://raw.githubusercontent.com/openebs/openebs/master/k8s/openebs-storageclasses.yaml
