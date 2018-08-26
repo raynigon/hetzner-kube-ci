@@ -15,6 +15,7 @@ RUN echo ">>> Installing Tools..." && \
     chmod +x hetzner-kube-linux-amd64 && \
     ln -s /app/hetzner-kube-linux-amd64 /app/hetzner-kube && \
     printf ">>> Running Hetzner Kube Version: " && \
-    /app/hetzner-kube version
+    /app/hetzner-kube version && \
+    /app/hetzner-kube completion > /etc/bash_completion.d/hetzner-kube
 
 CMD ["/app/hetzner-kube"]
