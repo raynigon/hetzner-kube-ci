@@ -1,17 +1,19 @@
-FROM alpine:latest
+FROM debian:stable-slim
 
 ENV HETZNER_KUBE_REPOSITORY xetys/hetzner-kube
-
+ENV PATH /app/:$PATH
 WORKDIR /app
 
-RUN echo "Installing Curl" && \
-    apk --no-cache add curl > /dev/null && \
+RUN echo "Installing Tools..." && \
+    apt-get update -qq && \
+    apt-get install -qq -y --no-install-recommends ca-cacert curl jq  && \
+    apt-get clean -qq && \
     echo "Using Repository: $HETZNER_KUBE_REPOSITORY" && \
-    HETZNER_KUBE_VERSION=$(curl --silent "https://api.github.com/repos/$HETZNER_KUBE_REPOSITORY/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') && \
+    HETZNER_KUBE_VERSION=$(curl --silent "https://api.github.com/repos/$HETZNER_KUBE_REPOSITORY/releases/latest" | jq -r '.tag_name') && \
     echo "Using Hetzner Kube Version: $HETZNER_KUBE_VERSION" && \
     curl --silent -L "https://github.com/$HETZNER_KUBE_REPOSITORY/releases/download/$HETZNER_KUBE_VERSION/hetzner-kube-linux-amd64" --output hetzner-kube-linux-amd64 && \
     chmod +x hetzner-kube-linux-amd64 && \
-    export PATH=$PATH:/app/ && \
-    hetzner-kube-linux-amd64 --version
+    printf "Running Hetzner Kube Version: " && \
+    /app/hetzner-kube-linux-amd64 version
 
 CMD ["/app/hetzner-kube-linux-amd64"]
