@@ -13,7 +13,7 @@ RUN echo ">>> Installing Tools..." && \
     echo ">>> Using Hetzner Kube Version: $HETZNER_KUBE_VERSION" && \
     curl --silent -L "https://github.com/$HETZNER_KUBE_REPOSITORY/releases/download/$HETZNER_KUBE_VERSION/hetzner-kube-linux-amd64" --output hetzner-kube-linux-amd64 && \
     chmod +x hetzner-kube-linux-amd64 && \
-    ln -s /app/hetzner-kube-linux-amd64 /app/hetzner-kube
+    ln -s /app/hetzner-kube-linux-amd64 /app/hetzner-kube && \
     printf ">>> Running Hetzner Kube Version: " && \
     /app/hetzner-kube version
 
