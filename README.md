@@ -21,8 +21,6 @@ test-configuration:
   image: python:latest
   stage: validate
   script:
-    # Ensure all variables were set
-    - python ci/check_variables.py
     # Check that the SSH Key exists
     - test -e $SSH_KEY_NAME
     - test -e $SSH_KEY_NAME.pub
