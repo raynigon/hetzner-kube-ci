@@ -10,8 +10,8 @@ RUN echo "Installing Curl" && \
     HETZNER_KUBE_VERSION=$(curl --silent "https://api.github.com/repos/$HETZNER_KUBE_REPOSITORY/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') && \
     echo "Using Hetzner Kube Version: $HETZNER_KUBE_VERSION" && \
     curl --silent -L "https://github.com/$HETZNER_KUBE_REPOSITORY/releases/download/$HETZNER_KUBE_VERSION/hetzner-kube-linux-amd64" --output hetzner-kube-linux-amd64 && \
-    chmod +x hetzner-kube-amd64 && \
+    chmod +x hetzner-kube-linux-amd64 && \
     export PATH=$PATH:/app/ && \
-    hetzner-kube-amd64 --version
+    hetzner-kube-linux-amd64 --version
 
-CMD ["/app/hetzner-kube-amd64"]
+CMD ["/app/hetzner-kube-linux-amd64"]
