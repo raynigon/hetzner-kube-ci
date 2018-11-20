@@ -1,5 +1,5 @@
 # hetzner-kube-ci
-A Simple Docker Image containg the hetzner-kube tool. 
+A Simple Docker Image containing the hetzner-kube tool. 
 
 Can be used for CI Builds like in Travis or Gitlab to setup Clusters dynamically
 
